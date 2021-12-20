@@ -18,12 +18,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
   List<MovieResult>? topRatedModel;
   List<MovieResult>? nowPlayingModel;
   var urlImage = 'https://image.tmdb.org/t/p/w500';
-  final MovieBloc _movieBloc = MovieBloc();
-  @override
-  void initState() {
-    super.initState();
-    _movieBloc.add(GetMovies(1));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +25,6 @@ class _MoviesScreenState extends State<MoviesScreen> {
     var orientation = MediaQuery.of(context).orientation;
 
     return BlocBuilder<MovieBloc, MovieState>(
-      bloc: _movieBloc,
       builder: (context, state) {
         if (state is MovieInitial) {
           return Center(child: CircularProgressIndicator());
@@ -47,7 +40,7 @@ class _MoviesScreenState extends State<MoviesScreen> {
           return Center(
             child: NoWifi(
               onPressed: () {
-                _movieBloc.add(GetMovies(1));
+                BlocProvider.of<MovieBloc>(context).add(GetMovies(1));
               },
             ),
           );

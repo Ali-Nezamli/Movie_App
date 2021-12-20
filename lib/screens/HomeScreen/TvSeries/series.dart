@@ -19,15 +19,8 @@ class _TvSeriesState extends State<TvSeries> {
   bool isLoadingNextPage = false;
 
   @override
-  void initState() {
-    super.initState();
-    seriesBloc.add(GetSeries(1));
-  }
-
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<SeriesBloc, SeriesState>(
-      bloc: seriesBloc,
       builder: (context, state) {
         if (state is SeriesInitial) {
           return Center(child: CircularProgressIndicator());
@@ -42,7 +35,7 @@ class _TvSeriesState extends State<TvSeries> {
           return Center(
             child: NoWifi(
               onPressed: () {
-                seriesBloc.add(GetSeries(1));
+                BlocProvider.of<SeriesBloc>(context).add(GetSeries(1));
               },
             ),
           );

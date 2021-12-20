@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/screens/HomeScreen/Movies/bloc/Movie_bloc.dart';
 import 'package:movieapp/screens/HomeScreen/Movies/movies-screen.dart';
+import 'package:movieapp/screens/HomeScreen/TvSeries/bloc/series_bloc.dart';
 import 'package:movieapp/screens/HomeScreen/TvSeries/series.dart';
 import 'package:movieapp/screens/SearchScreen/page/search-screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class BottomNavBarScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _BottomNavBarScreenState createState() => _BottomNavBarScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
   FocusNode focusNode = FocusNode();
   int selectedIndex = 0;
   final PageController _pageController = PageController();
@@ -16,6 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
   bool showButton = false;
   String? name;
   TextEditingController textEditingController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<MovieBloc>(context).add(GetMovies(1));
+    BlocProvider.of<SeriesBloc>(context).add(GetSeries(1));
+  }
 
   @override
   Widget build(BuildContext context) {
